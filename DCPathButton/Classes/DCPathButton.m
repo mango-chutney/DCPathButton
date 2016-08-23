@@ -125,6 +125,7 @@
     _pathCenterButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.centerImage.size.width, self.centerImage.size.height)];
     [_pathCenterButton setImage:self.centerImage forState:UIControlStateNormal];
     [_pathCenterButton setImage:self.centerHighlightedImage forState:UIControlStateHighlighted];
+    [_pathCenterButton setImage:self.centerHighlightedImage forState:UIControlStateSelected];
     [_pathCenterButton addTarget:self action:@selector(centerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     _pathCenterButton.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
     [self addSubview:_pathCenterButton];
@@ -259,6 +260,7 @@
 #pragma mark - Center Button Delegate
 
 - (void)centerButtonTapped {
+    self.pathCenterButton.selected = YES;
     self.isBloom? [self pathCenterButtonFold] : [self pathCenterButtonBloom];
 }
 
@@ -396,6 +398,7 @@
         self.center = _dcButtonCenter;
         
         self.pathCenterButton.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+        self.pathCenterButton.selected = NO;
         
         [self.bottomView removeFromSuperview];
     });
