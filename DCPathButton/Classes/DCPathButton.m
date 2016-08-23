@@ -106,7 +106,7 @@
     self.bloom = NO;
     self.bloomRadius = 105.0f;
     self.bloomAngel = 120.0f;
-    
+
     // Configure the view's center, it will change after the frame folded or bloomed
     //
     self.foldCenter = CGPointMake(self.bloomSize.width / 2, self.bloomSize.height - 25.5f);
@@ -131,6 +131,7 @@
     
     // Configure bottom view
     //
+    self.bottomViewAlpha = 0.0618f;
     _bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.bloomSize.width * 2, self.bloomSize.height * 2)];
     _bottomView.backgroundColor = self.bottomViewColor;
     _bottomView.alpha = 0.0f;
@@ -487,7 +488,7 @@
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
-                         _bottomView.alpha = 0.618f;
+                         _bottomView.alpha = self.bottomViewAlpha;
                      }
                      completion:nil];
     

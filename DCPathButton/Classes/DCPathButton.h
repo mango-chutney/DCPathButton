@@ -163,6 +163,11 @@ typedef NS_ENUM(NSUInteger, kDCPathButtonBloomDirection) {
 @property (strong, nonatomic) UIColor *bottomViewColor;
 
 /*!
+ *  Final alpha value of backdrop after it has finished animating.
+ */
+@property (assign, nonatomic) CGFloat bottomViewAlpha;
+
+/*!
  *  Direction of `DCPathButton` object's bloom animation.
  */
 @property (assign, nonatomic) kDCPathButtonBloomDirection bloomDirection;
