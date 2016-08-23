@@ -26,7 +26,6 @@
 @property (assign, nonatomic) CGPoint expandCenter;
 @property (assign, nonatomic) CGPoint pathCenterButtonBloomCenter;
 
-@property (strong, nonatomic) UIView *bottomView;
 @property (strong, nonatomic) UIButton *pathCenterButton;
 @property (strong, nonatomic) NSMutableArray *itemButtons;
 
