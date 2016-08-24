@@ -388,12 +388,13 @@
                      }
                      completion:nil];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        // Remove the button items from the superview
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // Remove the button items from the superview earlier than the overlay
         //
         [self.itemButtons makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        
+    });
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.frame = CGRectMake(0, 0, self.foldedSize.width, self.foldedSize.height);
         self.center = _dcButtonCenter;
         
@@ -415,6 +416,11 @@
     rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     rotationAnimation.duration = self.basicDuration + 0.05f;
     
+    CAKeyframeAnimation *scalingAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    scalingAnimation.values = @[@(1.0), @(0.9), @(0.8), @(0.0)];
+    scalingAnimation.keyTimes = @[@(0.0), @(0.5), @(0.7), @(1.0)];
+    scalingAnimation.duration = self.basicDuration + 0.05f;
+
     // 2.Configure moving animation
     //
     CAKeyframeAnimation *movingAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
@@ -435,7 +441,7 @@
     // 3.Merge animation together
     //
     CAAnimationGroup *animations = [CAAnimationGroup animation];
-    animations.animations = (self.allowSubItemRotation? @[rotationAnimation, movingAnimation] : @[movingAnimation]);
+    animations.animations = (self.allowSubItemRotation? @[rotationAnimation, scalingAnimation, movingAnimation] : @[scalingAnimation, movingAnimation]);
     animations.duration = self.basicDuration + 0.05f;
     
     return animations;
@@ -569,6 +575,11 @@
     rotationAnimation.duration = self.basicDuration;
     rotationAnimation.keyTimes = @[@(0.0), @(0.3), @(0.6), @(1.0)];
     
+    CAKeyframeAnimation *scalingAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    scalingAnimation.values = @[@(0.0), @(1.0)];
+    scalingAnimation.keyTimes = @[@(0.0), @(0.3)];
+    scalingAnimation.duration = self.basicDuration + 0.05f;
+
     // 2.Configure moving animation
     //
     CAKeyframeAnimation *movingAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
@@ -589,7 +600,7 @@
     // 3.Merge two animation together
     //
     CAAnimationGroup *animations = [CAAnimationGroup animation];
-    animations.animations = (self.allowSubItemRotation? @[movingAnimation, rotationAnimation] : @[movingAnimation]);
+    animations.animations = (self.allowSubItemRotation? @[movingAnimation, scalingAnimation, rotationAnimation] : @[movingAnimation, scalingAnimation]);
     animations.duration = self.basicDuration;
     animations.delegate = self;
     
